@@ -24,13 +24,14 @@
 			<div class="col-lg-8">
 								<p><b>Step 2.</b> Add the dependency</p> 
 			</div>
-			<div class="col-lg-2 text-right">
-				<div class="dropdown" id="subprojects" style="display: none;">
-					  <button class="btn btn-default dropdown-toggle" type="button" id="moduleDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-					    Subproject
-					    <span class="caret"></span>
-					  </button>
-					  <ul class="dropdown-menu" aria-labelledby="moduleDropdown" id="modulesList"></ul>
-				</div>
-			</div>
-		</div>
+			
+			
+			
+			
+			<div role="tabpanel" class="tab-pane depTab gradle active">
+                            <pre class="kode code-toolbar  language-css"><code id="depCodeGradle" class=" kode  language-css">	<span class="token selector">dependencies</span> <span class="token punctuation">{</span>
+	        implementation <span class="token string">'com.github.HadiDadkhah99:Navigation:Tag'</span>
+	<span class="token punctuation">}</span>
+</code></pre>
+                        </div>
+			
