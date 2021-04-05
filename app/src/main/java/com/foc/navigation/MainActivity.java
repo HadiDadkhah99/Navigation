@@ -6,8 +6,12 @@ import android.os.Bundle;
 
 import com.foc.libs.pronavigation.NavigationPro;
 import com.foc.navigation.fragment.HomeFragment;
+import com.foc.navigation.fragment.ProductDetailFragment;
+import com.foc.navigation.fragment.ProductFragment;
 import com.foc.navigation.fragment.ProfileFragment;
-import com.foc.navigation.fragment.ShopFragment;
+import com.foc.navigation.fragment.ProfileSettingsFragment;
+import com.foc.navigation.fragment.NewsFragment;
+import com.foc.navigation.fragment.TopNewsFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
@@ -25,10 +29,23 @@ public class MainActivity extends AppCompatActivity {
         this.navigationPro = NavigationPro.init(this, R.id.main_frame);
         this.navigationPro.
                 addFragment(HomeFragment.class, true).
-                addFragment(ShopFragment.class, true).
-                addFragment(ProfileFragment.class, true);
+                addFragment(NewsFragment.class, true).
+                addFragment(ProfileFragment.class, true).
+                addFragment(ProductFragment.class).
+                addFragment(ProfileSettingsFragment.class).
+                addFragment(ProductDetailFragment.class).
+                addFragment(TopNewsFragment.class);
 
 
         this.navigationPro.attachBottomNavigation(new BVNavigation(bottomNavigationView));
+    }
+
+    /*
+     *add this code for own activity
+     * mange back stack in pro navigation
+     */
+    @Override
+    public void onBackPressed() {
+        navigationPro.onBackPress(this);
     }
 }

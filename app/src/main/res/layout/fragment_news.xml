@@ -2,17 +2,16 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="#00B0FF"
+    android:background="#76FF03"
     android:layout_height="match_parent"
-    android:layout_width="match_parent"
-    >
+    android:layout_width="match_parent">
 
     <TextView
         android:id="@+id/textView"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:layout_width="wrap_content"
-        android:text="Home Fragment"
+        android:text="News Fragment"
         android:textColor="@color/black"
         android:textSize="24dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -20,11 +19,11 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button_product"
+        android:id="@+id/button_news"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:layout_width="wrap_content"
-        android:text="Go Product Fragment"
+        android:text="Go Top News Fragment"
         app:layout_constraintEnd_toEndOf="@+id/textView"
         app:layout_constraintStart_toStartOf="@+id/textView"
         app:layout_constraintTop_toBottomOf="@+id/textView" />

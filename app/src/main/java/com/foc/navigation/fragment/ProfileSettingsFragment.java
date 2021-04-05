@@ -8,19 +8,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.foc.libs.pronavigation.NavigationPro;
 import com.foc.navigation.R;
 
 
-public class ProfileFragment extends Fragment {
+public class ProfileSettingsFragment extends Fragment {
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_profile, container, false);
-        view.findViewById(R.id.button_setting_profile).setOnClickListener(v -> NavigationPro.get().showFragment(ProfileSettingsFragment.class, true));
+        View view= inflater.inflate(R.layout.fragment_profile_settings, container, false);
+
 
         return view;
     }

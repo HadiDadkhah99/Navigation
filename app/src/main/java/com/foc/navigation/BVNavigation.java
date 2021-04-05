@@ -25,7 +25,7 @@ public class BVNavigation extends BottomNavigation {
 
             if (item.getItemId() == R.id._home)
                 itemClicked.clicked(0);
-            else if (item.getItemId() == R.id._shop)
+            else if (item.getItemId() == R.id._news)
                 itemClicked.clicked(1);
             else if (item.getItemId() == R.id._profile)
                 itemClicked.clicked(2);
@@ -43,7 +43,7 @@ public class BVNavigation extends BottomNavigation {
                 bottomNavigationView.setSelectedItemId(R.id._home);
                 break;
             case 1:
-                bottomNavigationView.setSelectedItemId(R.id._shop);
+                bottomNavigationView.setSelectedItemId(R.id._news);
                 break;
             case 2:
                 bottomNavigationView.setSelectedItemId(R.id._profile);

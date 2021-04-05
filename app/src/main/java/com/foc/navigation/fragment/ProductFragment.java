@@ -12,15 +12,15 @@ import com.foc.libs.pronavigation.NavigationPro;
 import com.foc.navigation.R;
 
 
-public class ProfileFragment extends Fragment {
+public class ProductFragment extends Fragment {
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_profile, container, false);
-        view.findViewById(R.id.button_setting_profile).setOnClickListener(v -> NavigationPro.get().showFragment(ProfileSettingsFragment.class, true));
+        View view = inflater.inflate(R.layout.fragment_product, container, false);
+        view.findViewById(R.id.button_product_detail).setOnClickListener(v -> NavigationPro.get().showFragment(ProductDetailFragment.class, true));
 
         return view;
     }
