@@ -1,4 +1,8 @@
-<meta name="google-site-verification" content="H05jG2cf88e226gg0oep4MKw6XuH82BrW8jHS0Oq3O8" />
+<html>
+  <head>
+    <meta name="google-site-verification" content="H05jG2cf88e226gg0oep4MKw6XuH82BrW8jHS0Oq3O8" />
+  </head>
+</html>
 
 # Android Navigation
 <a href="https://jitpack.io/#HadiDadkhah99/Navigation/"><img id="badge" src="https://jitpack.io/v/HadiDadkhah99/Navigation.svg"></a>
