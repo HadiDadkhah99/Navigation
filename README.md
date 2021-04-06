@@ -26,4 +26,6 @@
 </div>
 			
 		
-			
+#Usage
+![](http://www.mytelbot.ir/resume/navigation_gif.gif)
+
