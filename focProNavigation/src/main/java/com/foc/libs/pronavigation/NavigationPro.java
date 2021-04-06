@@ -2,6 +2,7 @@ package com.foc.libs.pronavigation;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -24,6 +25,8 @@ import java.util.Map;
 public class NavigationPro implements ItemClicked {
 
     private static NavigationPro nav;
+
+    //destination listener
     private DestinationChangeListener listener;
 
     //current fragment
@@ -64,42 +67,36 @@ public class NavigationPro implements ItemClicked {
 
     }
 
-    /*
-     *destination change listener
-     */
 
+    /**
+     * set destination change listener
+     */
     public void setDestinationListener(DestinationChangeListener listener) {
         this.listener = listener;
     }
 
-    /*
-     *destination change
-     */
-    private void changeDestination(String current, String destination) {
 
-        if (listener == null)
-            return;
-
-        listener.change(current, destination);
-
-    }
-
-    /*
-     *destroy
+    /**
+     * destroy navigation after activity destroyed
+     * in onDestroy() activity
      */
     public void destroy() {
         nav = null;
     }
 
-    /*
-     * singleTone class
+
+    /**
+     * (create) navigation class in first time
+     * init in onCreate() method activity
      */
     public static NavigationPro init(Context context, int frameLayoutID) {
         return nav = nav == null ? new NavigationPro(context, frameLayoutID) : nav;
     }
 
-    /*
-     * singleTone class
+
+    /**
+     * (get) navigation class after init() method called
+     * for example in onCreateView() method of fragment call this method
      */
     public static NavigationPro get() {
 
@@ -114,8 +111,9 @@ public class NavigationPro implements ItemClicked {
         return nav;
     }
 
-    /*
-     * add fragments in hashMap (just replace fragment and don't create instance in any replacement)
+
+    /**
+     * add the fragments that not menu item
      */
     public NavigationPro addFragment(Class<? extends Fragment> fragmentClass) {
 
@@ -130,8 +128,9 @@ public class NavigationPro implements ItemClicked {
         return this;
     }
 
-    /*
-     * if added fragment is menu item
+
+    /**
+     * add fragments are menu item
      */
     public NavigationPro addFragment(Class<? extends Fragment> fragmentClass, boolean isMenu) {
 
@@ -153,16 +152,8 @@ public class NavigationPro implements ItemClicked {
     }
 
 
-    /*
-     * add Fragment to Back Stack (Navigation Pro Back Stack !!)
-     */
-    private void addNode(Node<Fragment> node) {
-        this.nodes.add(node);
-    }
-
-
-    /*
-     * show fragment in frame layout (with Bundle)
+    /**
+     * show fragment (with Bundle)
      */
     public void showFragment(Class<? extends Fragment> fragmentClass, Bundle bundle, boolean addToBackStack) {
 
@@ -173,8 +164,9 @@ public class NavigationPro implements ItemClicked {
 
     }
 
-    /*
-     * show fragment in frame layout (without Bundle)
+
+    /**
+     * show fragment (without Bundle)
      */
     public void showFragment(Class<? extends Fragment> fragmentClass, boolean addToBackStack) {
 
@@ -184,6 +176,212 @@ public class NavigationPro implements ItemClicked {
         replace(node, fragmentClass.getName(), addToBackStack);
 
     }
+
+
+    /**
+     * restart fragment (without bundle)
+     */
+    public void restartFragment(Class<? extends Fragment> fragmentClass) {
+
+        if (!currentFragment.equals(fragmentClass.getName()))
+            return;
+
+        //change destination
+        changeDestination(currentFragment, fragmentClass.getName());
+
+        //get fragment
+        Node<Fragment> node = fragments.get(fragmentClass.getName());
+
+        FragmentTransaction ft = frm.beginTransaction();
+        //restart
+        ft.detach(node.fragment());
+        ft.attach(node.fragment());
+        ft.commit();
+
+    }
+
+
+    /**
+     * restart fragment (with bundle)
+     */
+    public void restartFragment(Class<? extends Fragment> fragmentClass, Bundle bundle) {
+
+        if (!currentFragment.equals(fragmentClass.getName()))
+            return;
+
+        //change destination
+        changeDestination(currentFragment, fragmentClass.getName());
+
+        //get fragment
+        Node<Fragment> node = fragments.get(fragmentClass.getName());
+
+        //set bundle
+        if (bundle != null)
+            node.fragment().setArguments(bundle);
+
+        FragmentTransaction ft = frm.beginTransaction();
+        //restart
+        ft.detach(node.fragment());
+        ft.attach(node.fragment());
+        ft.commit();
+    }
+
+
+    /*
+     * get fragment of hash map
+     */
+    public Fragment getFragment(String tag) {
+        return fragments.get(tag).fragment();
+    }
+
+
+    /**
+     * mange activity on back press
+     * call this method in onBackPress() method of activity
+     */
+    public void onBackPress(AppCompatActivity activity) {
+
+
+        // if node size (back stack size) > 0
+        if (nodes.size() > 0) {
+
+
+            /*
+             *last fragment is menu item and its first bottom navigation item
+             *then finish activity
+             */
+            if (isMenuItem(nodes.getLast()) && nodes.getLast().nodeTag().equals(menuItems.get(0).nodeTag())) {
+                destroy();
+                activity.finish();
+            }
+
+
+            /*
+             *last fragment is menu item
+             */
+            else if (isMenuItem(nodes.getLast())) {
+
+
+                //*********************clear all back stack
+                for (int i = 0; i < lastNodes.size(); i++) {
+                    //clear all back stack of item
+                    lastNodes.get(i).clear();
+                    //set menu item as first back stack of any item
+                    lastNodes.get(i).add(menuItems.get(i));
+                }
+
+                //clear back stack
+                nodes.clear();
+                //add first menu item to first back stack
+                nodes.add(menuItems.get(0));
+                //set first item as current item (0)
+                lastPos = 0;
+                //bottom navigation view select index 0
+                bottomController.selectItem(lastPos);
+                //show fragment
+                showFragment(nodes.getLast().fragment().getClass(), nodes.getLast().fragment().getArguments(), false);
+
+
+            }
+            /*
+             * show fragment in back stack
+             */
+            else {
+                //remove last fragment
+                lastNodes.get(lastPos).remove(lastNodes.get(lastPos).size() - 1);
+                //remove from back stack
+                nodes.remove(nodes.size() - 1);
+                //show
+                showFragment(nodes.getLast().fragment().getClass(), nodes.getLast().fragment().getArguments(), false);
+
+            }
+
+        }
+        //if back stack size is 0
+        else
+            activity.finish();
+
+    }
+
+
+    /**
+     * menu item clicked
+     */
+    @Override
+    public void clicked(int pos) {
+
+
+        /*
+         *if last item and clicked item is equal and last fragment its not menu item
+         * then clear item back stack
+         */
+        if (this.lastPos == pos && !isMenuItem(nodes.getLast())) {
+
+            showFragment(menuItems.get(pos).fragment().getClass(), menuItems.get(pos).fragment().getArguments(), false);
+            nodes.add(menuItems.get(pos));
+            lastNodes.get(pos).clear();
+            lastNodes.get(pos).add(menuItems.get(pos));
+
+            return;
+
+        }
+        //if last item and clicked item is equal
+        else if (this.lastPos == pos)
+            return;
+
+
+        //set last item
+        this.lastPos = pos;
+
+        //show fragment
+        showFragment(lastNodes.get(pos).get(lastNodes.get(pos).size() - 1).fragment().getClass(), lastNodes.get(pos).get(lastNodes.get(pos).size() - 1).fragment().getArguments(), false);
+        nodes.addAll(lastNodes.get(pos));
+
+
+    }
+
+
+    /**
+     * attach bottom navigation
+     * create class that extends of BottomNavigation (Required for BottomNavigationView integration)
+     */
+    public void attachBottomNavigation(BottomNavigation bottomNavigationView) {
+
+
+        bottomController = new BottomNavigationClickController(this, bottomNavigationView);
+        //default show
+        clicked(0);
+
+    }
+
+
+    /**
+     * if destination changed
+     */
+    private void changeDestination(String current, String destination) {
+
+        if (listener == null)
+            return;
+
+        listener.change(current, destination);
+
+    }
+
+    /**
+     * check fragment is menu item or not
+     */
+    private boolean isMenuItem(Node<Fragment> node) {
+
+        for (Node<Fragment> menu : menuItems) {
+            if (menu.nodeTag().equals(node.nodeTag())) {
+
+                return true;
+            }
+        }
+
+        return false;
+    }
+
 
     /*
      * replace fragment
@@ -203,129 +401,17 @@ public class NavigationPro implements ItemClicked {
             this.lastNodes.get(lastPos).add(node);
         }
 
+        //commit
         ft.commit();
 
     }
 
-    /*
-     * restart fragment
-     */
-    public void restartFragment(Class<? extends Fragment> fragmentClass) {
-
-        if (!currentFragment.equals(fragmentClass.getName()))
-            return;
-
-        //change destination
-        changeDestination(currentFragment, fragmentClass.getName());
-
-        FragmentTransaction ft = frm.beginTransaction();
-
-        //get fragment
-        Node<Fragment> node = fragments.get(fragmentClass.getName());
-
-        //restart
-        ft.detach(node.fragment());
-        ft.attach(node.fragment());
-        ft.commit();
-
-    }
-
-    public Fragment getFragment(String tag) {
-        return fragments.get(tag).fragment();
-    }
-
 
     /*
-     * mange on back press
+     * add Fragment to Back Stack (Navigation Pro Back Stack !!)
      */
-    public void onBackPress(AppCompatActivity activity) {
-
-
-        if (nodes.size() > 0) {
-
-            if (isMenuItem(nodes.getLast()) && nodes.getLast().nodeTag().equals(menuItems.get(0).nodeTag())) {
-                destroy();
-                activity.finish();
-            }
-
-
-            //check last node is menu item
-            else if (isMenuItem(nodes.getLast())) {
-
-                for (int i = 0; i < lastNodes.size(); i++) {
-                    lastNodes.get(i).clear();
-                    lastNodes.get(i).add(menuItems.get(i));
-                }
-
-                nodes.clear();
-                nodes.add(menuItems.get(0));
-                lastPos = 0;
-                bottomController.selectItem(lastPos);
-                showFragment(nodes.getLast().fragment().getClass(), nodes.getLast().fragment().getArguments(), false);
-
-
-            } else {
-                lastNodes.get(lastPos).remove(lastNodes.get(lastPos).size() - 1);
-                nodes.remove(nodes.size() - 1);
-                showFragment(nodes.getLast().fragment().getClass(), nodes.getLast().fragment().getArguments(), false);
-
-            }
-
-        } else
-            activity.finish();
-
+    private void addNode(Node<Fragment> node) {
+        this.nodes.add(node);
     }
-
-    public boolean isMenuItem(Node<Fragment> node) {
-
-        for (Node<Fragment> menu : menuItems) {
-            if (menu.nodeTag().equals(node.nodeTag())) {
-
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-
-    @Override
-    public void clicked(int pos) {
-
-
-        if (this.lastPos == pos && !isMenuItem(nodes.getLast())) {
-
-            showFragment(menuItems.get(pos).fragment().getClass(), menuItems.get(pos).fragment().getArguments(), false);
-            nodes.add(menuItems.get(pos));
-            lastNodes.get(pos).clear();
-            lastNodes.get(pos).add(menuItems.get(pos));
-
-
-            return;
-
-        } else if (this.lastPos == pos) {
-
-            return;
-        }
-
-        this.lastPos = pos;
-
-        showFragment(lastNodes.get(pos).get(lastNodes.get(pos).size() - 1).fragment().getClass(), lastNodes.get(pos).get(lastNodes.get(pos).size() - 1).fragment().getArguments(), false);
-        nodes.addAll(lastNodes.get(pos));
-
-
-    }
-
-
-    public void attachBottomNavigation(BottomNavigation bottomNavigationView) {
-
-
-        bottomController = new BottomNavigationClickController(this, bottomNavigationView);
-        //default show
-        clicked(0);
-
-    }
-
-
 }
 		
