@@ -1,3 +1,11 @@
+<html>
+<head>
+<meta name="google-site-verification" content="iYoT0atoP8EL4sC5xAdZUyUdF1dr-yjWHtC_scEK-w8" />
+</head>
+<body>
+</body>
+</html>
+
 ## Welcome to GitHub Pages
 
 You can use the [editor on GitHub](https://github.com/HadiDadkhah99/Navigation/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
