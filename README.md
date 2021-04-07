@@ -82,4 +82,29 @@ To attach BottomNavigationView to NavigationPro you need to create a class that 
 ```
 
 
+## ShowFragment
 
+```java
+ @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_home, container, false);
+
+        //get button
+        Button button = view.findViewById(R.id.button_product);
+
+        //button click
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                //show product fragment (add to back stack)
+                NavigationPro.get().showFragment(ProductFragment.class, true);
+
+            }
+        });
+
+        return view;
+    }
+```
