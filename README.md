@@ -31,3 +31,30 @@ dependencies {
 
 ![](http://www.mytelbot.ir/resume/navigation_gif.gif)
 
+## Initialization
+
+### in onCreate Activity
+
+```java
+@Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        
+        //init navigation
+        NavigationPro navigationPro = NavigationPro.init(this, R.id.main_frame);
+
+        //add fragments
+        navigationPro.
+                addFragment(HomeFragment.class, true).
+                addFragment(NewsFragment.class, true).
+                addFragment(ProfileFragment.class, true).
+                addFragment(ProductFragment.class).
+                addFragment(ProfileSettingsFragment.class).
+                addFragment(ProductDetailFragment.class).
+                addFragment(TopNewsFragment.class);
+
+    }
+```
+
+
