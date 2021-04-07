@@ -68,5 +68,16 @@ dependencies {
     }
 ```
 
+## Attach BottomNavigationView
+
+### in onCreate Activity after initialization
+
+```java
+        //find bottomNavigation
+        bottomNavigationView = findViewById(R.id.bottom_view);
+        //attach
+        this.navigationPro.attachBottomNavigation(new BVNavigation(bottomNavigationView));
+```
+
 
 
