@@ -57,4 +57,16 @@ dependencies {
     }
 ```
 
+## Manage Backstack
+
+### in onBackPressed Activty
+
+```java
+ @Override
+    public void onBackPressed() {
+        navigationPro.onBackPress(this);
+    }
+```
+
+
 
