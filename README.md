@@ -29,7 +29,7 @@ dependencies {
 		
 # Usage
 
-![](http://www.mytelbot.ir/resume/navigation_gif.gif)
+![](http://www.mytelbot.ir/resume/pronavigation_gif.gif)
 
 ## Initialization
 
