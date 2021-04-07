@@ -72,6 +72,8 @@ dependencies {
 
 ### in onCreate Activity after initialization
 
+for
+
 ```java
         //find bottomNavigation
         bottomNavigationView = findViewById(R.id.bottom_view);
