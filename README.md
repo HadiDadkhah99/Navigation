@@ -72,7 +72,7 @@ dependencies {
 
 ### in onCreate Activity after initialization
 
-for attach BottomNavigationView to NavigationPro you must create class that extends BottomNavigation (like BVNavigation)
+To attach BottomNavigationView to NavigationPro you need to create a class that extends the BottomNavigation class (like BVNavigation)
 
 ```java
         //find bottomNavigation
