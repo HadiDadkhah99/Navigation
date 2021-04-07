@@ -20,8 +20,7 @@ public class BottomNavigationClickController implements ItemClicked {
     }
 
 
-
-   public void selectItem(int pos) {
+    public void selectItem(int pos) {
 
         btnNav.setItemActiveIndex(pos);
 

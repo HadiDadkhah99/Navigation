@@ -227,11 +227,13 @@ public class NavigationPro implements ItemClicked {
     }
 
 
-    /*
-     * get fragment of hash map
+    /**
+     * get fragment
      */
-    public Fragment getFragment(String tag) {
-        return fragments.get(tag).fragment();
+    public Fragment getFragment(Class<? extends Fragment> fragmentClass) {
+
+        return fragments.get(fragmentClass.getName()).fragment();
+
     }
 
 
@@ -277,7 +279,8 @@ public class NavigationPro implements ItemClicked {
                 //set first item as current item (0)
                 lastPos = 0;
                 //bottom navigation view select index 0
-                bottomController.selectItem(lastPos);
+                if (bottomController != null)
+                    bottomController.selectItem(lastPos);
                 //show fragment
                 showFragment(nodes.getLast().fragment().getClass(), nodes.getLast().fragment().getArguments(), false);
 
