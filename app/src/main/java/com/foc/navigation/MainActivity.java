@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
                 addFragment(TopNewsFragment.class);
 
 
-        //this.navigationPro.attachBottomNavigation(new BVNavigation(bottomNavigationView));
+        this.navigationPro.attachBottomNavigation(new BVNavigation(bottomNavigationView));
     }
 
     /*

@@ -51,7 +51,7 @@ public class NavigationPro implements ItemClicked {
 
 
     //last item selected
-    private int lastPos = -1;
+    private int lastPos = 0;
 
     //frame layout
     private final int frameLayoutID;
