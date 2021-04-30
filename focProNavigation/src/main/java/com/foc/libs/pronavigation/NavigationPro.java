@@ -415,5 +415,12 @@ public class NavigationPro implements ItemClicked {
     private void addNode(Node<Fragment> node) {
         this.nodes.add(node);
     }
+
+    /**
+     * bottom navigation controller
+     */
+    public BottomNavigationController getBottomController() {
+        return bottomController;
+    }
 }
 		
