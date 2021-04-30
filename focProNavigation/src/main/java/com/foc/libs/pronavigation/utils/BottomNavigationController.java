@@ -4,13 +4,13 @@ package com.foc.libs.pronavigation.utils;
 import com.foc.libs.pronavigation.NavigationPro;
 import com.foc.libs.pronavigation.interfaces.ItemClicked;
 
-public class BottomNavigationClickController implements ItemClicked {
+public class BottomNavigationController implements ItemClicked {
 
     private final BottomNavigation btnNav;
     private final NavigationPro navigationPro;
 
 
-    public BottomNavigationClickController(NavigationPro navigationPro, BottomNavigation btnNav) {
+    public BottomNavigationController(NavigationPro navigationPro, BottomNavigation btnNav) {
 
         this.btnNav = btnNav;
         this.navigationPro = navigationPro;
@@ -32,5 +32,9 @@ public class BottomNavigationClickController implements ItemClicked {
 
         navigationPro.clicked(pos);
 
+    }
+
+    public BottomNavigation getBtnNav() {
+        return btnNav;
     }
 }

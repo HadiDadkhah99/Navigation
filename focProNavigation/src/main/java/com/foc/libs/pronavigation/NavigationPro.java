@@ -2,7 +2,6 @@ package com.foc.libs.pronavigation;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -12,7 +11,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.foc.libs.pronavigation.interfaces.DestinationChangeListener;
 import com.foc.libs.pronavigation.interfaces.ItemClicked;
 import com.foc.libs.pronavigation.utils.BottomNavigation;
-import com.foc.libs.pronavigation.utils.BottomNavigationClickController;
+import com.foc.libs.pronavigation.utils.BottomNavigationController;
 import com.foc.libs.pronavigation.utils.Node;
 
 import java.util.ArrayList;
@@ -33,7 +32,7 @@ public class NavigationPro implements ItemClicked {
     private String currentFragment;
 
     //nav controller
-    private BottomNavigationClickController bottomController;
+    private BottomNavigationController bottomController;
 
     //fragment manager
     private final FragmentManager frm;
@@ -351,7 +350,7 @@ public class NavigationPro implements ItemClicked {
     public void attachBottomNavigation(BottomNavigation bottomNavigationView) {
 
 
-        bottomController = new BottomNavigationClickController(this, bottomNavigationView);
+        bottomController = new BottomNavigationController(this, bottomNavigationView);
         //default show
         clicked(0);
 
