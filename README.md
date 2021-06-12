@@ -29,7 +29,8 @@ dependencies {
 		
 # Usage
 
-![](http://www.mytelbot.ir/resume/pronavigation_gif.gif)
+![](http://www.dadkhahhadi.ir/github/proNavigationGif.gif) ![alt text](http://www.dadkhahhadi.ir/github/proNavigationimg.png) 
+
 
 ## Initialization
 
