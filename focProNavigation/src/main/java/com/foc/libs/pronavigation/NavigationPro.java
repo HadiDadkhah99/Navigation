@@ -2,7 +2,9 @@ package com.foc.libs.pronavigation;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.widget.ImageView;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -10,6 +12,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.foc.libs.pronavigation.interfaces.DestinationChangeListener;
 import com.foc.libs.pronavigation.interfaces.ItemClicked;
+import com.foc.libs.pronavigation.utils.Animation;
 import com.foc.libs.pronavigation.utils.BottomNavigation;
 import com.foc.libs.pronavigation.utils.BottomNavigationController;
 import com.foc.libs.pronavigation.utils.Node;
@@ -150,20 +153,6 @@ public class NavigationPro implements ItemClicked {
         return this;
     }
 
-
-    /**
-     * show fragment (with Bundle)
-     */
-    public void showFragment(Class<? extends Fragment> fragmentClass, Bundle bundle, boolean addToBackStack) {
-
-        Node<Fragment> node = fragments.get(fragmentClass.getName());
-        node.fragment().setArguments(bundle);
-
-        replace(node, fragmentClass.getName(), addToBackStack);
-
-    }
-
-
     /**
      * show fragment (without Bundle)
      */
@@ -172,7 +161,32 @@ public class NavigationPro implements ItemClicked {
         Node<Fragment> node = fragments.get(fragmentClass.getName());
         node.fragment().setArguments(null);
 
-        replace(node, fragmentClass.getName(), addToBackStack);
+        replace(node, fragmentClass.getName(), addToBackStack, null);
+
+    }
+
+    /**
+     * show fragment (with Bundle)
+     */
+    public void showFragment(Class<? extends Fragment> fragmentClass, @Nullable Bundle bundle, boolean addToBackStack) {
+
+        Node<Fragment> node = fragments.get(fragmentClass.getName());
+        node.fragment().setArguments(bundle);
+
+        replace(node, fragmentClass.getName(), addToBackStack, null);
+
+    }
+
+
+    /**
+     * show fragment (with Bundle) and (with Animation)
+     */
+    public void showFragment(Class<? extends Fragment> fragmentClass, @Nullable Bundle bundle, @Nullable Animation animation, boolean addToBackStack) {
+
+        Node<Fragment> node = fragments.get(fragmentClass.getName());
+        node.fragment().setArguments(bundle);
+
+        replace(node, fragmentClass.getName(), addToBackStack, animation);
 
     }
 
@@ -388,7 +402,7 @@ public class NavigationPro implements ItemClicked {
     /*
      * replace fragment
      */
-    private void replace(Node<Fragment> node, String fragTag, boolean addToBackStack) {
+    private void replace(Node<Fragment> node, String fragTag, boolean addToBackStack, @Nullable Animation animation) {
         //change destination
         changeDestination(currentFragment, fragTag);
 
@@ -396,7 +410,16 @@ public class NavigationPro implements ItemClicked {
         this.currentFragment = fragTag;
 
         FragmentTransaction ft = frm.beginTransaction();
+        //set animations
+        if (animation != null) {
+            if (animation.popEnter == -1 && animation.popExit == -1)
+                ft.setCustomAnimations(animation.enter, animation.exit);
+            else
+                ft.setCustomAnimations(animation.enter, animation.exit, animation.popEnter, animation.popExit);
+        }
+        //replace fragment
         ft.replace(frameLayoutID, node.fragment(), fragTag);
+
 
         if (addToBackStack) {
             addNode(node);

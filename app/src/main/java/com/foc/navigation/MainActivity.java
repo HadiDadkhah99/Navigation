@@ -48,4 +48,13 @@ public class MainActivity extends AppCompatActivity {
     public void onBackPressed() {
         navigationPro.onBackPress(this);
     }
+
+    /**
+     * destroy navigation (importance)
+     */
+    @Override
+    protected void onDestroy() {
+        navigationPro.destroy();
+        super.onDestroy();
+    }
 }
