@@ -13,7 +13,11 @@ public class Animation {
     @AnimatorRes
     public int popExit=-1;
 
-    public Animation() {
+
+
+    public Animation(int enter, int exit) {
+        this.enter = enter;
+        this.exit = exit;
     }
 
     public Animation(int enter, int exit, int popEnter, int popExit) {
@@ -22,6 +26,7 @@ public class Animation {
         this.popEnter = popEnter;
         this.popExit = popExit;
     }
+
 
 
 }

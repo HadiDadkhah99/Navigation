@@ -29,12 +29,13 @@ public class MainActivity extends AppCompatActivity {
         this.navigationPro = NavigationPro.init(this, R.id.main_frame);
         this.navigationPro.
                 addFragment(HomeFragment.class, true).
-                addFragment(NewsFragment.class, true).
-                addFragment(ProfileFragment.class, true).
+                addFragment(NewsFragment.class,true).
+                addFragment(ProfileFragment.class,true).
                 addFragment(ProductFragment.class).
                 addFragment(ProfileSettingsFragment.class).
                 addFragment(ProductDetailFragment.class).
                 addFragment(TopNewsFragment.class);
+
 
 
         this.navigationPro.attachBottomNavigation(new BVNavigation(bottomNavigationView));
@@ -49,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
         navigationPro.onBackPress(this);
     }
 
-    /**
+    /*
      * destroy navigation (importance)
      */
     @Override

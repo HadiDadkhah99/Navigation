@@ -249,6 +249,29 @@ public class NavigationPro implements ItemClicked {
 
     }
 
+    /**
+     * You must define at last a fragment as menu --addFragment(YourFragment.class, true)--
+     *
+     * don't use apply() with attachBottomNavigation()
+     */
+    public NavigationPro apply() {
+
+        if (menuItems.size() == 0) {
+            try {
+                throw new Exception("You must define at last a fragment as menu --addFragment(YourFragment.class, true)--");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            clicked(0);
+            return this;
+        }
+
+
+        return null;
+
+    }
+
 
     /**
      * mange activity on back press
@@ -365,9 +388,7 @@ public class NavigationPro implements ItemClicked {
 
 
         bottomController = new BottomNavigationController(this, bottomNavigationView);
-        //default show
-        clicked(0);
-
+        apply();
     }
 
 

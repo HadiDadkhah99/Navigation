@@ -1,31 +1,15 @@
 
-
 plugins {
 
     id 'com.android.library'
-    //id 'com.github.panpf.bintray-publish'
-    
+
 }
 
-/*
-publish {
-    userOrg = 'FOC'
-    groupId = 'com.foc.libs.pronavigation'
-    artifactId = 'pronavigation'
-    publishVersion = '1.0.0'
-    desc = 'Oh hi, this is a nice description for a project, right?'
-    website = 'https://github.com/HadiDadkhah99/pronavigation'
-}
-tasks.withType(GenerateModuleMetadata) {
-    enabled = false
-}
 
- */
 
 android {
 
     compileSdkVersion 30
-    buildToolsVersion "30.0.3"
 
     defaultConfig {
         minSdkVersion 19
