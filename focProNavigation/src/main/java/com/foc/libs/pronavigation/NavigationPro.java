@@ -34,6 +34,7 @@ public class NavigationPro implements ItemClicked {
     //current fragment
     private String currentFragment;
 
+
     //nav controller
     private BottomNavigationController bottomController;
 
@@ -251,7 +252,7 @@ public class NavigationPro implements ItemClicked {
 
     /**
      * You must define at last a fragment as menu --addFragment(YourFragment.class, true)--
-     *
+     * <p>
      * don't use apply() with attachBottomNavigation()
      */
     public NavigationPro apply() {
@@ -465,6 +466,13 @@ public class NavigationPro implements ItemClicked {
      */
     public BottomNavigationController getBottomController() {
         return bottomController;
+    }
+
+    /**
+     * get current showed fragment
+     */
+    public String getCurrentFragment() {
+        return currentFragment;
     }
 }
 		

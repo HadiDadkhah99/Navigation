@@ -28,17 +28,10 @@ public class MainActivity extends AppCompatActivity {
         //init nav
         this.navigationPro = NavigationPro.init(this, R.id.main_frame);
         this.navigationPro.
-                addFragment(HomeFragment.class, true).
-                addFragment(NewsFragment.class,true).
-                addFragment(ProfileFragment.class,true).
-                addFragment(ProductFragment.class).
-                addFragment(ProfileSettingsFragment.class).
-                addFragment(ProductDetailFragment.class).
-                addFragment(TopNewsFragment.class);
+                addFragment(HomeFragment.class, true);
+        this.navigationPro.showFragment(HomeFragment.class, null, false);
 
 
-
-        this.navigationPro.attachBottomNavigation(new BVNavigation(bottomNavigationView));
     }
 
     /*
